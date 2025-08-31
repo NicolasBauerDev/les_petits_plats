@@ -7,6 +7,175 @@
         <link href="./public/build/style.css" rel="stylesheet" />
     </head>
     <body>
-
+        <!-- Hero + Form -->
+        <header class="relative flex flex-col bg-[url(/assets/hero.webp)] bg-cover bg-center lg:h-[60vh]">
+            <div class="absolute inset-0 z-0 bg-linear-to-b from-[#1b1b1b80] to-[#1b1b1b80]"></div>
+            <div role="group" class="z-1 flex h-full flex-col">
+                <img src="./public/img/logo.svg" alt="Logo officiel" class="absolute top-[51px] left-[69px] w-2/12" />
+                <div role="group" class="flex h-full flex-col items-center justify-center">
+                    <h1 class="max-w-[890px] text-center text-[44px] text-regular-yellow uppercase">
+                        Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses
+                    </h1>
+                    <form class="mt-8 flex h-fit w-1/2 flex-row rounded-xl bg-white py-3 pr-[10px] pl-[35px]">
+                        <input type="text" name="search" placeholder="Rechercher une recette..." class="w-full" />
+                        <button type="submit" class="rounded-xl bg-regular-black p-3 hover:cursor-pointer">
+                            <svg
+                                width="28"
+                                height="29"
+                                viewBox="0 0 28 29"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <circle cx="10" cy="10.4219" r="9.5" stroke="white" />
+                                <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="white" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+        <main class="flex w-screen flex-col bg-regular-light-gray p-8 lg:py-0 lg:px-[104px] lg:pb-52 lg:gap-5">
+            <!-- Filtres + Nb Recettes -->
+            <div role="group" class="flex justify-between">
+                <!-- Liste filtres -->
+                <div role="group" class="flex lg:gap-16">
+                    <!-- Ingrédients -->
+                    <article id="ingredients" class="flex gap-[63px] lg:mt-5" role="group">
+                        <div class="w-[195px] flex-1/3 rounded-xl bg-white" aria-label="Liste déroulante ingrédients">
+                            <header class="flex items-center justify-between px-4 pt-4" id="toggle">
+                                <span>Ingrédients</span>
+                                <img src="assets/arrow_down.svg" alt="" />
+                            </header>
+                            <div class="dropdown-panel" id="panel">
+                                <div class="px-4">
+                                    <div class="flex w-full justify-between items-center border-regular-light-gray border rounded-xs py-2 pl-2 pr-4 mt-3.5">
+                                        <input type="text" placeholder="Rechercher…" class="w-full text-sm" />
+                                        <div class="flex items-center gap-2">
+                                            <img src="assets/close_input.svg" alt="icône de supression de texte">
+                                            <img src="assets/search_input.svg" alt="icône de recherche">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="listbox" id="list-select" class="mt-3" tabindex="0">
+                                    <div role="option" id="Jus_de_citron" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Jus de citron</div>
+                                    <div role="option" id="Glaçons" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Glaçons</div>
+                                    <div role="option" id="Tomate" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Tomate</div>
+                                    <div role="option" id="Poulet" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Poulet</div>
+                                    <div role="option" id="Poivron_rouge" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Poivron rouge</div>
+                                    <div role="option" id="Thon_en_miettes" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Thon en miettes</div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Appareils -->
+                    <article id="appareils" class="flex gap-[63px] lg:mt-5" role="group">
+                        <div class="w-[195px] flex-1/3 rounded-xl bg-white" aria-label="Liste déroulante ingrédients">
+                            <header class="flex items-center justify-between px-4 pt-4" id="toggle">
+                                <span>Ingrédients</span>
+                                <img src="assets/arrow_down.svg" alt="" />
+                            </header>
+                            <div class="dropdown-panel" id="panel">
+                                <div class="px-4">
+                                    <div class="flex w-full justify-between items-center border-regular-light-gray border rounded-xs py-2 pl-2 pr-4 mt-3.5">
+                                        <input type="text" placeholder="Rechercher…" class="w-full text-sm" />
+                                        <div class="flex items-center gap-2">
+                                            <img src="assets/close_input.svg" alt="icône de supression de texte">
+                                            <img src="assets/search_input.svg" alt="icône de recherche">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="listbox" id="list-select" class="mt-3" tabindex="0">
+                                    <div role="option" id="Jus_de_citron" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Jus de citron</div>
+                                    <div role="option" id="Glaçons" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Glaçons</div>
+                                    <div role="option" id="Tomate" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Tomate</div>
+                                    <div role="option" id="Poulet" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Poulet</div>
+                                    <div role="option" id="Poivron_rouge" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Poivron rouge</div>
+                                    <div role="option" id="Thon_en_miettes" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Thon en miettes</div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Ustensils -->
+                    <article id="ustensils" class="flex gap-[63px] lg:mt-5" role="group">
+                        <div class="w-[195px] flex-1/3 rounded-xl bg-white" aria-label="Liste déroulante ingrédients">
+                            <header class="flex items-center justify-between px-4 pt-4" id="toggle">
+                                <span>Ingrédients</span>
+                                <img src="assets/arrow_down.svg" alt="" />
+                            </header>
+                            <div class="dropdown-panel" id="panel">
+                                <div class="px-4">
+                                    <div class="flex w-full justify-between items-center border-regular-light-gray border rounded-xs py-2 pl-2 pr-4 mt-3.5">
+                                        <input type="text" placeholder="Rechercher…" class="w-full text-sm" />
+                                        <div class="flex items-center gap-2">
+                                            <img src="assets/close_input.svg" alt="icône de supression de texte">
+                                            <img src="assets/search_input.svg" alt="icône de recherche">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="listbox" id="list-select" class="mt-3" tabindex="0">
+                                    <div role="option" id="Jus_de_citron" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Jus de citron</div>
+                                    <div role="option" id="Glaçons" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Glaçons</div>
+                                    <div role="option" id="Tomate" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Tomate</div>
+                                    <div role="option" id="Poulet" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Poulet</div>
+                                    <div role="option" id="Poivron_rouge" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Poivron rouge</div>
+                                    <div role="option" id="Thon_en_miettes" class="font-manrope flex justify-between items-center hover:bg-regular-yellow px-4 py-[9px] last:rounded-b-[11px] cursor-pointer">Thon en miettes</div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <!-- Nombre de recettes affiché -->
+                <div role="note" class="lg:mt-10">
+                    <h2 class="text-xl"><span id="recipes_count">NN</span> Recettes</h2>
+                </div>
+            </div>
+            <!-- Liste items selectionnés -->
+            <div role="group" class="flex lg:gap-16">
+                <div class="bg-regular-yellow flex justify-between px-5 py-4 lg:w-52 rounded-xl">
+                    <span class="font-manrope font-normal text-sm">Crème de coco</span>
+                    <img class="cursor-pointer" src="assets/close_selection.svg" alt="Fermer"/>
+                </div>
+            </div>
+            <!-- Listes recettes -->
+            <div role="group" id="list-recipes" class="flex gap-y-16 lg:gap-x-12 flex-wrap lg:mt-[23px]">
+                <article class="rounded-[21px] overflow-hidden lg:w-96">
+                    <header class="relative lg:h-64">
+                        <img class="lg:h-64 object-cover" width="100%" src="assets/recipes/Recette01.jpg" alt="Recette 1" loading="lazy">
+                        <span class="bg-regular-yellow font-manrope rounded-[14px] absolute top-5 right-5 text-xs py-1.5 px-4">10min</span>
+                    </header>
+                    <div role="group" class="flex flex-col bg-white p-8 gap-8 lg:px-6">
+                        <h2 class="text-lg" id="title">Lorem ipsum...</h2>
+                        <div role="group" class="flex flex-col">
+                            <h3>Recette</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit repellat alias, excepturi assumenda minus autem iure? Alias vero laudantium dolor, atque veritatis tempora cumque officiis dicta non placeat corporis optio.
+                            </p>
+                        </div>
+                        <div role="group" class="flex flex-col">
+                            <h3>Ingrédients</h3>
+                            <div role="group" class="flex flex-wrap gap-y-5">
+                                <div role="group" class="ingredients flex flex-col flex-1/2">
+                                    <h4>lorem ipsum</h4>
+                                    <p class="font-manrope text-regular-gray text-sm">400ml</p>
+                                </div>
+                                <div role="group" class="flex flex-col flex-1/2">
+                                    <h4>lorem ipsum</h4>
+                                    <p class="font-manrope text-regular-gray text-sm">400ml</p>
+                                </div>
+                                <div role="group" class="flex flex-col flex-1/2">
+                                    <h4>lorem ipsum</h4>
+                                    <p class="font-manrope text-regular-gray text-sm">400ml</p>
+                                </div>
+                                <div role="group" class="flex flex-col flex-1/2">
+                                    <h4>lorem ipsum</h4>
+                                    <p class="font-manrope text-regular-gray text-sm">400ml</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </main>
+        <script type="module" src="src/scripts/main.js"></script>
     </body>
 </html>
