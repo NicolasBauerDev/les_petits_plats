@@ -2,3 +2,5 @@
 # macOS system files
 node_modules/
 # Node.js dependencies
+.vscode/
+# VSCode settings
