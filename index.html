@@ -16,8 +16,8 @@
                     <h1 class="max-w-[890px] text-center text-[44px] text-regular-yellow uppercase">
                         Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses
                     </h1>
-                    <form class="mt-8 flex h-fit w-1/2 flex-row rounded-xl bg-white py-3 pr-[10px] pl-[35px]">
-                        <input type="text" name="search" placeholder="Rechercher une recette..." class="w-full" />
+                    <form id="form-search" class="mt-8 flex h-fit w-1/2 flex-row rounded-xl bg-white py-3 pr-[10px] pl-[35px]">
+                        <input id="main-search" type="text" name="search" placeholder="Rechercher une recette..." class="w-full" />
                         <button type="submit" class="rounded-xl bg-regular-black p-3 hover:cursor-pointer">
                             <svg
                                 width="28"
@@ -126,7 +126,7 @@
                 </div>
                 <!-- Nombre de recettes affiché -->
                 <div role="note" class="lg:mt-10">
-                    <h2 class="text-xl"><span id="recipes_count">NN</span> Recettes</h2>
+                    <h2 class="text-xl"><span id="recipes_count">NN</span></h2>
                 </div>
             </div>
             <!-- Liste items selectionnés -->
@@ -138,7 +138,7 @@
             </div>
             <!-- Listes recettes -->
             <div role="group" id="list-recipes" class="flex gap-y-16 lg:gap-x-12 flex-wrap lg:mt-[23px]">
-                <article class="rounded-[21px] overflow-hidden lg:w-96">
+                <!-- <article class="rounded-[21px] overflow-hidden lg:w-96">
                     <header class="relative lg:h-64">
                         <img class="lg:h-64 object-cover" width="100%" src="assets/recipes/Recette01.jpg" alt="Recette 1" loading="lazy">
                         <span class="bg-regular-yellow font-manrope rounded-[14px] absolute top-5 right-5 text-xs py-1.5 px-4">10min</span>
@@ -173,7 +173,7 @@
                             </div>
                         </div>
                     </div>
-                </article>
+                </article> -->
             </div>
         </main>
         <script type="module" src="src/scripts/main.js"></script>
