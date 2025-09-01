@@ -4,8 +4,6 @@ import Recipes from "./Recipes.js";
 window.onload = () => {
     const mainSearch = document.getElementById("main-search");
     const form = document.getElementById("form-search");
-    // Affichage de 5 recettes au chargement de la page
-    // displayRecipes(5);
     form.addEventListener("submit", (e) => {
         e.preventDefault();
     });
@@ -13,7 +11,6 @@ window.onload = () => {
         const value = e.target.value;
         const results = search(value);
         displayRecipes(results);
-        console.log(results);
         
     });
 };
