@@ -9,8 +9,8 @@ const RECIPESDATA = recipes;
  * @param {Array} currentTab Tableau courant des résultats de recherche.
  * @returns {Array} Retourne un tableau d'objets recettes.
  */
-export default function search(argument = "Lait de coco") {
-    const options = ["ingredients", "ustensils", "name", "description"];
+export default function search(argument) {
+    const options = ["ingredients", "name", "description"];
     const results = [];
     if (typeof argument !== "string") {
         return new Error("L'argument doit être une chaîne de caractères.");
@@ -23,10 +23,11 @@ export default function search(argument = "Lait de coco") {
                 const ingredients = recipe.ingredients;
                 for (let k = 0; k < ingredients.length; k++) {
                     const ingredient = ingredients[k].ingredient;
-                    if (ingredient.toString().toLowerCase().includes(argument.toLowerCase())) {
-                        if (!results.includes(recipe)) {
-                            results.push(recipe);
-                        }
+                    if (
+                        ingredient.toString().toLowerCase().includes(argument.toLowerCase()) &&
+                        !results.includes(recipe)
+                    ) {
+                        results.push(recipe);
                     }
                 }
                 continue;
