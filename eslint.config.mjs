@@ -23,7 +23,7 @@ export default defineConfig([
         // Harmoniser les sauts de ligne dans les objets multilignes
         "object-curly-newline": ["error", { multiline: true, consistent: true }],
         // Longueur de ligne
-        "max-len": ["error", { code: 100, ignoreUrls: true }],
+        "max-len": ["error", { code: 120, ignoreUrls: true }],
         "default-case-last": "error"
     },
   },

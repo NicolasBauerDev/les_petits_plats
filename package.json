@@ -1,4 +1,7 @@
 {
+  "name": "les-petits-plats",
+  "description": "Projet 6 - Les petits plats",
+  "type": "module",
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@tailwindcss/cli": "^4.1.11",
@@ -9,7 +12,7 @@
     "tailwindcss": "^4.1.11"
   },
   "scripts": {
-    "build:css": "npx tailwindcss -i src/styles/style.css -o public/build/style.css",
-    "watch:css": "npx tailwindcss -i src/styles/style.css -o public/build/style.css --watch"
+    "build:css": "npx tailwindcss -i src/styles/style.css -o public/build/styles/style.css",
+    "watch:css": "npx tailwindcss -i src/styles/style.css -o public/build/styles/style.css --watch"
   }
 }
