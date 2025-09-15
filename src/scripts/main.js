@@ -5,7 +5,7 @@ import Filter from "./Filter.js";
 window.onload = () => {
     const mainSearch = document.getElementById("main-search");
     const form = document.getElementById("form-search");
-    const searchResults = search("");
+    const searchResults = search("");    
     displayRecipes(searchResults);
     form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -85,6 +85,10 @@ function updateFilter(type, keywords) {
             if (option.classList.contains("selected")) {
                 displayRecipes(giveSearchArguments(e.target.textContent));
                 addTagElement(e.target.textContent);
+                // Récupère tout les tag pour les supprimer depuis le bouton croix
+                const closeTagElement = document.querySelectorAll(`.close-tag`);
+                removesTagsElement(type, closeTagElement, option);
+                
             } else {
                 removeTagElement(e.target.textContent);
                 displayRecipes(giveSearchArguments(""));
@@ -126,6 +130,22 @@ function removeTagElement(id) {
     id = id.split(" ").join("-");
     const tagElement = document.querySelector(`#tag-${id}`);
    tagElement.remove();
+}
+
+/**
+ * @param {string} type Type du filtre
+ * @param {NodeListOf<Element>} tagsCloseElement 
+ * @param {optionElement} optionElement l'élément option actuel
+ */
+function removesTagsElement(type, tagsCloseElement, optionElement) {
+    tagsCloseElement.forEach(button => {
+        button.addEventListener("click", () => {
+            optionElement.classList.remove("selected");
+            button.parentElement.remove();
+            // Ré affiche toutes les recettes
+            displayRecipes(giveSearchArguments(""));
+        });
+    });
 }
 
 // Recettes
