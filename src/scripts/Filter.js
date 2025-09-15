@@ -44,9 +44,28 @@ export default class Filter {
             case "ingredients":
                 for (let i = 0; i < this.items.length; i++) {
                     for (let j = 0; j < this.items[i].length; j++) {
+                        // On évite les doublons
                         if (!listItems.includes(this.items[i][j].ingredient.toLowerCase())) {
                             listItems.push(this.items[i][j].ingredient.toLowerCase());
                         }
+                    }
+                }
+                break;
+            case "ustensils": 
+                for (let i = 0; i < this.items.length; i++) {
+                    for (let j = 0; j < this.items[i].length; j++) {
+                        // On évite les doublons
+                        if (!listItems.includes(this.items[i][j].toLowerCase())) {
+                            listItems.push(this.items[i][j].toLowerCase());
+                        }
+                    }
+                }
+                break;
+            case "appliance":
+                for (let i = 0; i < this.items.length; i++) {
+                    // On évite les doublons
+                    if (!listItems.includes(this.items[i].toLowerCase())) {
+                        listItems.push(this.items[i].toLowerCase());
                     }
                 }
                 break;
