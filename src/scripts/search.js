@@ -45,8 +45,8 @@ export function search(argument) {
 }
 
 /**
- * Recherche les recettes par Ustensils/Appareils
- * @param {string} type Ustensils/Appareils
+ * Recherche les recettes par Ustensils/Appareils/Ingredients
+ * @param {string} type Ustensils/Appareils/Ingredients
  * @param {Array<string>} keywords Mots clé
  * @returns {Array}
  */
@@ -57,14 +57,13 @@ export function searchByType(type, keywords) {
             for (let i = 0; i < RECIPESDATA.length; i++) {
                 const recipe = RECIPESDATA[i];
                 const ustensilsArray = RECIPESDATA[i].ustensils;
-                for (let k = 0; k < keywords.length; k++) {
-                    if (ustensilsArray.includes(keywords[k])) {
+                for (let j = 0; j < keywords.length; j++) {
+                    if (ustensilsArray.includes(keywords[j])) {
                         if (!result.includes(recipe)) {
                             result.push(recipe);
                         }
                     }
                 }
-                
             }
             break;
         case "appliance":
@@ -93,10 +92,41 @@ export function searchByType(type, keywords) {
                         }
                     }
                 }
-                
             }
             break;
     }
-    
+
+    return result;
+}
+
+export function searchByFilter(keywords) {
+    const result = [];
+    for (let i = 0; i < RECIPESDATA.length; i++) {
+        const recipe = RECIPESDATA[i];
+        const ustensilsArray = RECIPESDATA[i].ustensils;
+        const applianceRecipe = RECIPESDATA[i].appliance;
+        const ingredientArray = RECIPESDATA[i].ingredients;
+        for (let j = 0; j < keywords.length; j++) {
+            if (ustensilsArray.includes(keywords[j].toLowerCase())) {
+                if (!result.includes(recipe)) {
+                    result.push(recipe);
+                }
+            }
+            if (applianceRecipe.toLowerCase() === keywords[j].toLowerCase()) {
+                if (!result.includes(recipe)) {
+                    result.push(recipe);
+                }
+            }
+        }
+        for (let j = 0; j < ingredientArray.length; j++) {
+            for (let k = 0; k < keywords.length; k++) {
+                if (ingredientArray[j].ingredient.toLowerCase() === keywords[k].toLowerCase()) {
+                    if (!result.includes(recipe)) {
+                        result.push(recipe);
+                    }
+                }
+            }
+        }
+    }
     return result;
 }

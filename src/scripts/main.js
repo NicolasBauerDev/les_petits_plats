@@ -1,4 +1,4 @@
-import { search, searchByType } from "./search.js";
+import { search, searchByFilter } from "./search.js";
 import Recipes from "./Recipes.js";
 import Filter from "./Filter.js";
 
@@ -17,11 +17,12 @@ window.onload = () => {
 
     // Filtres
     initFilter(searchResults);
+    displayRecipesByTag();
 };
 
-function giveSearchArguments(argument, type = "") {
-    if (type !== "") {
-        return searchByType(type, argument);
+function giveSearchArguments(argument, filter = false) {
+    if (filter) {
+        return searchByFilter(argument);
     }
     return search(argument);
 }
@@ -92,32 +93,6 @@ function updateFilter(type, keywords) {
             filterTypeContainer.appendChild(element);
         });
     });
-
-    // Fonctionnalité de recherche au clique
-    const optionElements = filterTypeContainer.childNodes;
-    const elementSelected = [];
-    optionElements.forEach((option) => {
-        option.addEventListener("click", (e) => {
-            option.classList.toggle("selected");
-            if (option.classList.contains("selected")) {
-                elementSelected.push(e.target.textContent);
-                displayRecipes(giveSearchArguments(elementSelected, type));
-                addTagElement(e.target.textContent);
-                // Récupère tout les tag pour les supprimer depuis le bouton croix
-                const closeTagElement = document.querySelectorAll(`.close-tag`);
-                removesTagsElement(type, closeTagElement, option);
-            } else {
-                if (elementSelected.includes(e.target.textContent)) {
-                    elementSelected.splice(elementSelected.indexOf(e.target.textContent), 1);
-                }
-                displayRecipes(giveSearchArguments(elementSelected, type));
-                removeTagElement(e.target.textContent);
-            }
-            if (elementSelected.length === 0) {
-                displayRecipes(giveSearchArguments(""));
-            }
-        });
-    });
 }
 
 function resetFilter(type) {
@@ -137,7 +112,7 @@ function addTagElement(tagName) {
     const parentNode = document.querySelector("#list-tags");
     const divElement = document.createElement("div");
     divElement.classList.add("bg-regular-yellow", "flex", "justify-between", "px-5", "py-4", "lg:w-52", "rounded-xl");
-    divElement.setAttribute("id", `tag-${tagName.split(" ").join("-")}`);
+    divElement.setAttribute("id", `tag-${tagName.split(/['\s]+/).join("-")}`);
     divElement.innerHTML = `                
             <span class="font-manrope font-normal text-sm">${tagName}</span>
             <img class="cursor-pointer close-tag" src="assets/close_selection.svg" alt="Fermer"/>`;
@@ -149,23 +124,54 @@ function addTagElement(tagName) {
  * @param {string} id L'id du tag à supprimer
  */
 function removeTagElement(id) {
-    id = id.split(" ").join("-");
+    id = id.split(/['\s]+/).join("-");
     const tagElement = document.querySelector(`#tag-${id}`);
     tagElement.remove();
 }
 
 /**
- * @param {string} type Type du filtre
- * @param {NodeListOf<Element>} tagsCloseElement
- * @param {optionElement} optionElement l'élément option actuel
+ * @param {ChildNode} optionElement Type du filtre
+ * @param {Array<string>} tagSelected Tableau de tag
+ * @param {optionElement} tagName l'élément option actuel
  */
-function removesTagsElement(type, tagsCloseElement, optionElement) {
-    tagsCloseElement.forEach((button) => {
+function removesTagsElement(optionElement, tagSelected, tagName) {
+    const closeTagElement = document.querySelectorAll(`.close-tag`);
+    closeTagElement.forEach((button) => {
         button.addEventListener("click", () => {
+            if (tagSelected.includes(tagName)) {
+                tagSelected.splice(tagSelected.indexOf(tagName), 1);
+            }
+            console.log(tagSelected);
             optionElement.classList.remove("selected");
             button.parentElement.remove();
-            // Ré affiche toutes les recettes
-            displayRecipes(giveSearchArguments(""));
+        });
+    });
+}
+
+function displayRecipesByTag() {
+    const elementSelected = [];
+    const filtersElement = document.querySelectorAll(".filter .list-select");
+    filtersElement.forEach((filter) => {
+        const optionElements = filter.childNodes;
+        optionElements.forEach((option) => {
+            option.addEventListener("click", (e) => {
+                option.classList.toggle("selected");
+                if (option.classList.contains("selected")) {
+                    elementSelected.push(e.target.textContent);
+                    addTagElement(e.target.textContent);
+                } else {
+                    removeTagElement(e.target.textContent);
+                    if (elementSelected.includes(e.target.textContent)) {
+                        elementSelected.splice(elementSelected.indexOf(e.target.textContent), 1);
+                    }
+                }
+                console.log(elementSelected);
+                displayRecipes(giveSearchArguments(elementSelected, true));
+                // removesTagsElement(option, elementSelected, e.target.textContent);
+                if (elementSelected.length === 0) {
+                    displayRecipes(giveSearchArguments(""));
+                }
+            });
         });
     });
 }
