@@ -49,9 +49,9 @@
                             <div class="dropdown-panel" id="panel-ingredients">
                                 <div class="px-4">
                                     <div class="flex w-full justify-between items-center border-regular-light-gray border rounded-xs py-2 pl-2 pr-4">
-                                        <input type="text" placeholder="Rechercher…" class="w-full text-sm" />
+                                        <input name="ingredients" type="text" placeholder="Rechercher…" class="w-full text-sm" />
                                         <div class="flex items-center gap-2">
-                                            <img src="assets/close_input.svg" alt="icône de supression de texte">
+                                            <img class="cursor-pointer close-ingredients" src="assets/close_input.svg" alt="icône de supression de texte">
                                             <img src="assets/search_input.svg" alt="icône de recherche">
                                         </div>
                                     </div>
@@ -72,11 +72,11 @@
                 </div>
             </div>
             <!-- Liste items selectionnés -->
-            <div role="group" class="flex lg:gap-16">
-                <div class="bg-regular-yellow flex justify-between px-5 py-4 lg:w-52 rounded-xl">
+            <div id="list-tags" role="group" class="flex lg:gap-16">
+                <!-- <div class="bg-regular-yellow flex justify-between px-5 py-4 lg:w-52 rounded-xl">
                     <span class="font-manrope font-normal text-sm">Crème de coco</span>
                     <img class="cursor-pointer" src="assets/close_selection.svg" alt="Fermer"/>
-                </div>
+                </div> -->
             </div>
             <!-- Listes recettes -->
             <div role="group" id="list-recipes" class="flex gap-y-16 lg:gap-x-12 flex-wrap lg:mt-[23px]">

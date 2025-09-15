@@ -1,16 +1,16 @@
 export default class Filter {
     /**
-     * 
-     * @param {string} type Type du filtre 
+     *
+     * @param {string} type Type du filtre
      */
     constructor(type, data) {
         this._type = type;
         this._items = data;
     }
-    /** 
+    /**
      * Retourne le nom du filtre
      * @returns {string}
-    */
+     */
     get type() {
         return this._type;
     }
@@ -36,20 +36,37 @@ export default class Filter {
 
     /**
      * Créer un ensemble d'éléments de la liste
-     * @returns {Array} Retourne un tableau d'éléments HTML
+     * @returns {Array} Retourne un tableau de string
      */
     createList() {
         const listItems = [];
-        switch(this.type) {
-            case "ingredients" :
+        switch (this.type) {
+            case "ingredients":
                 for (let i = 0; i < this.items.length; i++) {
                     for (let j = 0; j < this.items[i].length; j++) {
-                        if(!listItems.includes(this.items[i][j].ingredient.toLowerCase())) {
+                        if (!listItems.includes(this.items[i][j].ingredient.toLowerCase())) {
                             listItems.push(this.items[i][j].ingredient.toLowerCase());
                         }
                     }
                 }
+                break;
         }
         this.items = listItems;
+    }
+
+    /**
+     * Rechercher un argument dans la liste
+     * @param {string} input Nom de(s) argument(s) à chercher
+     */
+    searchArguments(input) {
+        const currentList = [];
+        if (this.items === Array.isArray() && this.items.length > 0) {
+            for (let i = 0; i < this.items.length; i++) {
+                currentList.push(this.items[i]);
+            }
+        } else {
+            throw new Error("Aucune instance de l'objet filtre");
+        }
+        this.items = currentList.filter(argument => argument.toLowerCase().includes(input.toLocaleLowerCase()));
     }
 }
