@@ -112,7 +112,8 @@ function addTagElement(tagName) {
     const parentNode = document.querySelector("#list-tags");
     const divElement = document.createElement("div");
     divElement.classList.add("bg-regular-yellow", "flex", "justify-between", "px-5", "py-4", "lg:w-52", "rounded-xl");
-    divElement.setAttribute("id", `tag-${tagName.split(/['\s]+/).join("-")}`);
+    divElement.dataset.name = tagName;
+    divElement.setAttribute("id", `tag-${tagName.split(/['()\s]+/).join("-")}`);
     divElement.innerHTML = `                
             <span class="font-manrope font-normal text-sm">${tagName}</span>
             <img class="cursor-pointer close-tag" src="assets/close_selection.svg" alt="Fermer"/>`;
@@ -124,32 +125,64 @@ function addTagElement(tagName) {
  * @param {string} id L'id du tag à supprimer
  */
 function removeTagElement(id) {
-    id = id.split(/['\s]+/).join("-");
+    id = id.split(/['()\s]+/).join("-");
     const tagElement = document.querySelector(`#tag-${id}`);
     tagElement.remove();
 }
 
-/**
- * @param {ChildNode} optionElement Type du filtre
- * @param {Array<string>} tagSelected Tableau de tag
- * @param {optionElement} tagName l'élément option actuel
- */
-function removesTagsElement(optionElement, tagSelected, tagName) {
-    const closeTagElement = document.querySelectorAll(`.close-tag`);
-    closeTagElement.forEach((button) => {
-        button.addEventListener("click", () => {
-            if (tagSelected.includes(tagName)) {
-                tagSelected.splice(tagSelected.indexOf(tagName), 1);
+function setupTagCloseHandler(tagSelected) {
+    const parentNode = document.querySelector("#list-tags");
+    if (!parentNode) {
+        return;
+    }
+    // Évite les doubles bindings si la fonction est rappelée par mégarde
+    if (parentNode.dataset.bound === "1") {
+        return;
+    }
+    parentNode.dataset.bound = "1";
+
+    parentNode.addEventListener("click", (e) => {
+        const closeBtn = e.target.closest(".close-tag");
+        if (!closeBtn) {
+            return;
+        }
+
+        const tagDiv = closeBtn.parentElement;
+        const tagName =
+            tagDiv && tagDiv.dataset && tagDiv.dataset.name
+                ? tagDiv.dataset.name
+                : tagDiv.querySelector("span")?.textContent || "";
+
+        // 1) Retire le tag du tableau sélectionné
+        const idx = tagSelected.indexOf(tagName);
+        if (idx !== -1) {
+            tagSelected.splice(idx, 1);
+        }
+
+        // 2) Retire la classe "selected" de l'option correspondante dans les listes
+        const options = document.querySelectorAll(".filter .list-select .item");
+        const target = tagName.trim().toLowerCase();
+        options.forEach((opt) => {
+            if (opt.textContent.trim().toLowerCase() === target) {
+                opt.classList.remove("selected");
             }
-            console.log(tagSelected);
-            optionElement.classList.remove("selected");
-            button.parentElement.remove();
         });
+
+        // 3) Supprime visuellement le tag
+        tagDiv.remove();
+
+        // 4) Rafraîchit les recettes en fonction des tags restants
+        if (tagSelected.length === 0) {
+            displayRecipes(giveSearchArguments(""));
+        } else {
+            displayRecipes(giveSearchArguments(tagSelected, true));
+        }
     });
 }
 
 function displayRecipesByTag() {
     const elementSelected = [];
+    setupTagCloseHandler(elementSelected);
     const filtersElement = document.querySelectorAll(".filter .list-select");
     filtersElement.forEach((filter) => {
         const optionElements = filter.childNodes;
@@ -167,10 +200,6 @@ function displayRecipesByTag() {
                 }
                 console.log(elementSelected);
                 displayRecipes(giveSearchArguments(elementSelected, true));
-                // removesTagsElement(option, elementSelected, e.target.textContent);
-                if (elementSelected.length === 0) {
-                    displayRecipes(giveSearchArguments(""));
-                }
             });
         });
     });
