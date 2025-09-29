@@ -10,36 +10,32 @@ const RECIPESDATA = recipes;
  * @returns {Array} Retourne un tableau d'objets recettes.
  */
 export function search(argument) {
-    const options = ["ingredients", "name", "description"];
-    const results = [];
     if (typeof argument !== "string") {
-        return new Error("L'argument doit être une chaîne de caractères.");
+        throw new TypeError("L'argument doit être une chaîne de caractères.");
     }
-    for (let i = 0; i < RECIPESDATA.length; i++) {
-        const recipe = RECIPESDATA[i];
-        for (let j = 0; j < options.length; j++) {
-            const option = options[j];
-            if (option === "ingredients") {
-                const ingredients = recipe.ingredients;
-                for (let k = 0; k < ingredients.length; k++) {
-                    const ingredient = ingredients[k].ingredient;
-                    if (
-                        ingredient.toString().toLowerCase().includes(argument.toLowerCase()) &&
-                        !results.includes(recipe)
-                    ) {
-                        results.push(recipe);
-                    }
-                }
-                continue;
-            }
-            if (!recipe[option].toString().toLowerCase().includes(argument.toLowerCase())) {
-                continue;
-            }
-            if (!results.includes(recipe)) {
-                results.push(recipe);
-            }
-        }
-    }
+    const normaliser = (s) =>
+        String(s || "")
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim();
+
+    argument = normaliser(argument);
+
+    const results = RECIPESDATA.filter((recipe) => {
+        const nomOK = normaliser(recipe.name).includes(argument);
+        const descriptionOK = normaliser(recipe.description).includes(argument);
+
+        const ingredientsOK =
+            Array.isArray(recipe.ingredients) &&
+            recipe.ingredients.some((ingredientIndex) => {
+                const valeurIngredient = normaliser(ingredientIndex.ingredient).toLowerCase().trim();
+                return valeurIngredient.includes(argument);
+            });
+
+        // Important: filter attend un booléen ✔️
+        return nomOK || descriptionOK || ingredientsOK;
+    });
 
     return results;
 }
@@ -112,118 +108,44 @@ export function searchByType(type, keywords) {
  * @returns {Array} Recettes qui contiennent **tous** les mots-clés dans au moins une des 3 catégories.
  */
 export function searchByFilter(keywords, data = RECIPESDATA) {
-    if (!keywords || !Array.isArray(keywords) || keywords.length === 0) {
+    if (!Array.isArray(keywords) || keywords.length === 0) {
         return [];
     }
 
-    const normalizedKeywords = [];
-    for (let i = 0; i < keywords.length; i++) {
-        const raw = keywords[i];
-        if (typeof raw === "string") {
-            const cleaned = raw.toLowerCase().trim();
-            if (cleaned.length > 0) {
-                normalizedKeywords.push(cleaned);
-            }
-        }
-    }
+    const normaliser = (s) =>
+        String(s || "")
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim();
+
+    const normalizedKeywords = keywords
+        .filter((kw) => typeof kw === "string")
+        .map(normaliser)
+        .filter(Boolean);
+
     if (normalizedKeywords.length === 0) {
         return [];
     }
 
-    const matchingRecipes = [];
+    const results = data.filter((recipe) => {
+        const applianceLower = normaliser(recipe.appliance);
 
-    for (let r = 0; r < data.length; r++) {
-        const recipe = data[r];
+        const ingredientNamesLower = (recipe.ingredients || [])
+            .map((ing) => normaliser(ing.ingredient));
 
-        const applianceLower = (recipe.appliance || "").toString().toLowerCase();
+        const ustensilsLower = (recipe.ustensils || [])
+            .map((u) => normaliser(u));
 
-        const ingredientNamesLower = [];
-        const ingredientsList = recipe.ingredients || [];
-        for (let i = 0; i < ingredientsList.length; i++) {
-            const ingName = (ingredientsList[i].ingredient || "").toString().toLowerCase();
-            ingredientNamesLower.push(ingName);
-        }
+        // Chaque mot-clé doit être trouvé dans au moins une des 3 catégories
+        const allKeywordsFound = normalizedKeywords.every((kw) =>
+            ingredientNamesLower.some((name) => name.includes(kw)) ||
+            ustensilsLower.some((ust) => ust.includes(kw)) ||
+            applianceLower.includes(kw)
+        );
 
-        const ustensilsLower = [];
-        const ustensilsList = recipe.ustensils || [];
-        for (let i = 0; i < ustensilsList.length; i++) {
-            const ustName = (ustensilsList[i] || "").toString().toLowerCase();
-            ustensilsLower.push(ustName);
-        }
-        
+        return allKeywordsFound;
+    });
 
-        let allKeywordsFound = true;
-
-        for (let k = 0; k < normalizedKeywords.length; k++) {
-            const kw = normalizedKeywords[k];
-            let foundForThisKeyword = false;
-
-            for (let i = 0; i < ingredientNamesLower.length; i++) {
-                if (ingredientNamesLower[i].indexOf(kw) !== -1) {
-                    foundForThisKeyword = true;
-                    break;
-                }
-            }
-
-            if (!foundForThisKeyword) {
-                for (let i = 0; i < ustensilsLower.length; i++) {
-                    if (ustensilsLower[i].indexOf(kw) !== -1) {
-                        foundForThisKeyword = true;
-                        break;
-                    }
-                }
-            }
-
-            if (!foundForThisKeyword) {
-                if (applianceLower.indexOf(kw) !== -1) {
-                    foundForThisKeyword = true;
-                }
-            }
-
-            if (!foundForThisKeyword) {
-                allKeywordsFound = false;
-                break;
-            }
-        }
-
-        if (allKeywordsFound) {
-            matchingRecipes.push(recipe);
-        }
-    }
-
-    return matchingRecipes;
+    return results;
 }
-
-/* export function searchByFilter(keywords, data) {
-    const result = [];
-    for (let i = 0; i < data.length; i++) {
-        const recipe = data[i];
-        const ustensilsArray = data[i].ustensils;
-        const applianceRecipe = data[i].appliance;
-        const ingredientArray = data[i].ingredients;
-        for (let j = 0; j < keywords.length; j++) {
-            if (ustensilsArray.includes(keywords[j].toLowerCase())) {
-                if (!result.includes(recipe)) {
-                    result.push(recipe);
-                }
-            }
-            if (applianceRecipe.toLowerCase() === keywords[j].toLowerCase()) {
-                if (!result.includes(recipe)) {
-                    result.push(recipe);
-                }
-            }
-        }
-        for (let j = 0; j < ingredientArray.length; j++) {
-            for (let k = 0; k < keywords.length; k++) {
-                if (ingredientArray[j].ingredient.toLowerCase() === keywords[k].toLowerCase()) {
-                    if (!result.includes(recipe)) {
-                        result.push(recipe);
-                    }
-                }
-            }
-        }
-    }
-    console.log(result);
-    
-    return result;
-} */
