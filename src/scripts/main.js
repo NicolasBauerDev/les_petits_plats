@@ -198,7 +198,6 @@ function displayRecipesByTag() {
                         elementSelected.splice(elementSelected.indexOf(e.target.textContent), 1);
                     }
                 }
-                console.log(elementSelected);
                 displayRecipes(giveSearchArguments(elementSelected, true));
             });
         });
