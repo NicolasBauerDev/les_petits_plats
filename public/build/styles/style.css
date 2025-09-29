@@ -205,9 +205,6 @@
   .mt-3 {
     margin-top: calc(var(--spacing) * 3);
   }
-  .mt-3\.5 {
-    margin-top: calc(var(--spacing) * 3.5);
-  }
   .mt-8 {
     margin-top: calc(var(--spacing) * 8);
   }
@@ -220,11 +217,20 @@
   .grid {
     display: grid;
   }
+  .hidden {
+    display: none;
+  }
   .h-fit {
     height: fit-content;
   }
   .h-full {
     height: 100%;
+  }
+  .h-max {
+    height: max-content;
+  }
+  .max-h-64 {
+    max-height: calc(var(--spacing) * 64);
   }
   .w-1\/2 {
     width: calc(1/2 * 100%);
@@ -289,6 +295,9 @@
   .overflow-hidden {
     overflow: hidden;
   }
+  .overflow-scroll {
+    overflow: scroll;
+  }
   .rounded {
     border-radius: 0.25rem;
   }
@@ -330,12 +339,6 @@
     }
     background-image: linear-gradient(var(--tw-gradient-stops));
   }
-  .bg-\[url\(\.\.\/\/assets\/hero\.webp\)\] {
-    background-image: url(..//assets/hero.webp);
-  }
-  .bg-\[url\(\.\.\/assets\/hero\.webp\)\] {
-    background-image: url(../assets/hero.webp);
-  }
   .bg-\[url\(\/assets\/hero\.webp\)\] {
     background-image: url(/assets/hero.webp);
   }
@@ -358,6 +361,9 @@
   }
   .p-3 {
     padding: calc(var(--spacing) * 3);
+  }
+  .p-4 {
+    padding: calc(var(--spacing) * 4);
   }
   .p-8 {
     padding: calc(var(--spacing) * 8);
@@ -382,9 +388,6 @@
   }
   .py-\[9px\] {
     padding-block: 9px;
-  }
-  .pt-4 {
-    padding-top: calc(var(--spacing) * 4);
   }
   .pr-4 {
     padding-right: calc(var(--spacing) * 4);
@@ -428,6 +431,9 @@
   }
   .text-regular-yellow {
     color: var(--color-regular-yellow);
+  }
+  .capitalize {
+    text-transform: capitalize;
   }
   .uppercase {
     text-transform: uppercase;
@@ -552,16 +558,16 @@
   #list-recipes > article {
     box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
   }
-  #ingredients #list-select > .selected, #appareils #list-select > .selected, #ustensils #list-select > .selected {
+  .list-select .selected {
     background-color: var(--color-regular-yellow);
     color: var(--color-regular-black);
     font-weight: 700;
   }
-  #ingredients #list-select > .selected::after, #appareils #list-select > .selected::after, #ustensils #list-select > .selected::after {
-    content: url('../../assets/close_item_selected.svg');
+  .list-select .selected::after {
+    content: url('/assets/close_item_selected.svg');
     max-height: 17px;
   }
-  #ingredients #list-select > .selected::after:hover, #appareils #list-select > .selected::after:hover, #ustensils #list-select > .selected::after:hover {
+  .list-select .selected::after:hover {
     cursor: pointer;
   }
 }
