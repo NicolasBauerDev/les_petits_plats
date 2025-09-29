@@ -32,16 +32,17 @@
         box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
     }
 
-    #ingredients #list-select > .selected, #appareils #list-select > .selected, #ustensils #list-select > .selected {
+    .list-select .selected {
         background-color: var(--color-regular-yellow);
         color: var(--color-regular-black);
         font-weight: 700;
     }
-    #ingredients #list-select > .selected::after, #appareils #list-select > .selected::after, #ustensils #list-select > .selected::after {
-        content: url('../../assets/close_item_selected.svg');
+
+    .list-select .selected::after {
+        content: url('/assets/close_item_selected.svg');
         max-height: 17px;
     }
-    #ingredients #list-select > .selected::after:hover, #appareils #list-select > .selected::after:hover, #ustensils #list-select > .selected::after:hover {
+    .list-select .selected::after:hover {
         cursor: pointer;
     }
 }
