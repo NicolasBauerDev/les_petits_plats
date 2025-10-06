@@ -218,3 +218,19 @@ function displayRecipes(results) {
     }
     recipes_count.textContent = results.length > 1 ? `${results.length} recettes` : `${results.length} recette`;
 }
+
+function openCloseFilter() {
+    const filtersDropdown = document.querySelectorAll(".dropdown-panel");
+    const arrowDropdown = document.querySelectorAll(".arrow-icon-dropdown");
+
+    filtersDropdown.forEach((dropdown) => {
+        dropdown.parentElement.addEventListener("click", () => {
+            dropdown.classList.toggle("hidden");
+        });
+    });
+    arrowDropdown.forEach(arrowIcon => {
+        arrowIcon.parentElement.addEventListener("click", () => {
+            arrowIcon.classList.toggle("rotate-180");
+        });
+    });
+}
