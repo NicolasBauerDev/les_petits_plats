@@ -228,7 +228,7 @@ function openCloseFilter() {
     const filtersDropdown = document.querySelectorAll(".dropdown-panel");
     const arrowDropdown = document.querySelectorAll(".arrow-icon-dropdown");
 
-    filtersDropdown.forEach((dropdown, index) => {
+    filtersDropdown.forEach((dropdown) => {
         dropdown.parentElement.addEventListener("click", () => {
             dropdown.classList.toggle("hidden");
         });
