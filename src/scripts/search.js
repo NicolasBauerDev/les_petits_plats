@@ -193,37 +193,3 @@ export function searchByFilter(keywords, data = RECIPESDATA) {
 
     return matchingRecipes;
 }
-
-/* export function searchByFilter(keywords, data) {
-    const result = [];
-    for (let i = 0; i < data.length; i++) {
-        const recipe = data[i];
-        const ustensilsArray = data[i].ustensils;
-        const applianceRecipe = data[i].appliance;
-        const ingredientArray = data[i].ingredients;
-        for (let j = 0; j < keywords.length; j++) {
-            if (ustensilsArray.includes(keywords[j].toLowerCase())) {
-                if (!result.includes(recipe)) {
-                    result.push(recipe);
-                }
-            }
-            if (applianceRecipe.toLowerCase() === keywords[j].toLowerCase()) {
-                if (!result.includes(recipe)) {
-                    result.push(recipe);
-                }
-            }
-        }
-        for (let j = 0; j < ingredientArray.length; j++) {
-            for (let k = 0; k < keywords.length; k++) {
-                if (ingredientArray[j].ingredient.toLowerCase() === keywords[k].toLowerCase()) {
-                    if (!result.includes(recipe)) {
-                        result.push(recipe);
-                    }
-                }
-            }
-        }
-    }
-    console.log(result);
-    
-    return result;
-} */

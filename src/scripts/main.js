@@ -12,19 +12,23 @@ window.onload = () => {
         e.preventDefault();
     });
     mainSearch.addEventListener("input", (e) => {
-        displayRecipes(giveSearchArguments(e.target.value));
+        displayRecipes(giveSearchArguments(e.target.value), e.target.value);
     });
 
     // Filtres
+    openCloseFilter();
     initFilter(searchResults);
     displayRecipesByTag();
 };
 
 function giveSearchArguments(argument, filter = false) {
+    if (argument.length >= 3 && !filter) {
+        return search(argument);
+    }
     if (filter) {
         return searchByFilter(argument);
     }
-    return search(argument);
+    return [];
 }
 
 // Filtres
@@ -205,12 +209,33 @@ function displayRecipesByTag() {
 }
 
 // Recettes
-function displayRecipes(results) {
+function displayRecipes(results, inputValue) {
     const recipes_count = document.getElementById("recipes_count");
     const listRecipes = document.getElementById("list-recipes");
+    const noResult = document.getElementById("no-results");
     listRecipes.innerHTML = "";
     for (let i = 0; i < results.length; i++) {
         listRecipes.appendChild(new Recipes(results[i]).createRecipeCard());
     }
-    recipes_count.textContent = results.length > 1 ? `${results.length} recettes` : `${results.length} recette`;
+    recipes_count.textContent = results.length > 1 ? `${results.length} recettes` : `Aucune recette trouvée`;
+    if (results.length <= 0) {
+        noResult.classList.remove("hidden");
+        noResult.querySelector("h2").textContent = `Aucune recette ne contient ${inputValue}`;
+    }
+}
+
+function openCloseFilter() {
+    const filtersDropdown = document.querySelectorAll(".dropdown-panel");
+    const arrowDropdown = document.querySelectorAll(".arrow-icon-dropdown");
+
+    filtersDropdown.forEach((dropdown, index) => {
+        dropdown.parentElement.addEventListener("click", () => {
+            dropdown.classList.toggle("hidden");
+        });
+    });
+    arrowDropdown.forEach(arrowIcon => {
+        arrowIcon.parentElement.addEventListener("click", () => {
+            arrowIcon.classList.toggle("rotate-180");
+        });
+    });
 }
