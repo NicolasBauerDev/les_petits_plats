@@ -8,15 +8,15 @@
     </head>
     <body>
         <!-- Hero + Form -->
-        <header class="relative flex flex-col bg-[url(/assets/hero.webp)] bg-cover bg-center lg:h-[60vh]">
+        <header class="relative flex flex-col bg-[url(/assets/hero.webp)] bg-cover bg-center h-[60dvh]">
             <div class="absolute inset-0 z-0 bg-linear-to-b from-[#1b1b1b80] to-[#1b1b1b80]"></div>
-            <div role="group" class="z-1 flex h-full flex-col">
-                <img src="./public/img/logo.svg" alt="Logo officiel" class="absolute top-[51px] left-[69px] w-2/12" />
+            <div role="group" class="z-1 flex h-full flex-col px-4">
+                <img src="./public/img/logo.svg" alt="Logo officiel" class="absolute top-[51px] left-[69px] lg:w-2/12" />
                 <div role="group" class="flex h-full flex-col items-center justify-center">
-                    <h1 class="max-w-[890px] text-center text-[44px] text-regular-yellow uppercase">
+                    <h1 class="max-w-[890px] text-center text-3xl leading-10 lg:text-[44px] text-regular-yellow uppercase">
                         Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses
                     </h1>
-                    <form id="form-search" class="mt-8 flex h-fit w-1/2 flex-row rounded-xl bg-white py-3 pr-[10px] pl-[35px]">
+                    <form id="form-search" class="mt-8 flex h-fit flex-row rounded-xl w-full bg-white py-1.5 pr-[10px] pl-[10px] lg:py-3 lg:pl-[35px] lg:w-1/2">
                         <input id="main-search" type="text" name="search" placeholder="Rechercher une recette..." class="w-full" />
                         <button type="submit" class="rounded-xl bg-regular-black p-3 hover:cursor-pointer">
                             <svg
@@ -36,17 +36,17 @@
         </header>
         <main class="flex w-screen flex-col bg-regular-light-gray p-8 lg:py-0 lg:px-[104px] lg:pb-52 lg:gap-5">
             <!-- Filtres + Nb Recettes -->
-            <div role="group" class="flex justify-between">
+            <div role="group" class="flex justify-between flex-col lg:mt-[-27px] lg:pt-10 lg:pb-6 lg:border-b lg:border-b-regular-light-gray">
                 <!-- Liste filtres -->
-                <div role="group" class="flex lg:gap-16">
+                <div role="group" class="flex flex-wrap justify-center gap-4 lg:gap-16">
                     <!-- Ingrédients -->
                     <article id="ingredients" class="filter flex gap-[63px] lg:mt-5" role="group">
-                        <div class="w-[195px] flex-1/3 rounded-xl bg-white" aria-label="Liste déroulante ingrédients">
+                        <div class="w-[195px] flex-1/3 rounded-xl bg-white h-max" aria-label="Liste déroulante ingrédients">
                             <header class="flex items-center justify-between p-4">
                                 <span>Ingrédients</span>
-                                <img src="assets/arrow_down.svg" alt="flèche vers le bas" aria-label="Ouvrir liste filtre"/>
+                                <img class="arrow-icon-dropdown" src="assets/arrow_down.svg" alt="flèche vers le bas" aria-label="Ouvrir liste filtre"/>
                             </header>
-                            <div class="dropdown-panel" id="panel-ingredients">
+                            <div class="dropdown-panel hidden" id="panel-ingredients">
                                 <div class="px-4">
                                     <div class="flex w-full justify-between items-center border-regular-light-gray border rounded-xs py-2 pl-2 pr-4">
                                         <input name="ingredients" type="text" placeholder="Rechercher…" class="w-full text-sm" />
@@ -66,9 +66,9 @@
                         <div class="w-[195px] flex-1/3 rounded-xl bg-white h-max" aria-label="Liste déroulante appareils">
                             <header class="flex items-center justify-between p-4">
                                 <span>Appareils</span>
-                                <img src="assets/arrow_down.svg" alt="flèche vers le bas" aria-label="Ouvrir liste filtre"/>
+                                <img class="arrow-icon-dropdown" src="assets/arrow_down.svg" alt="flèche vers le bas" aria-label="Ouvrir liste filtre"/>
                             </header>
-                            <div class="dropdown-panel" id="panel-appliance">
+                            <div class="dropdown-panel hidden" id="panel-appliance">
                                 <div class="px-4">
                                     <div class="flex w-full justify-between items-center border-regular-light-gray border rounded-xs py-2 pl-2 pr-4">
                                         <input name="appliance" type="text" placeholder="Rechercher…" class="w-full text-sm" />
@@ -85,12 +85,12 @@
                     </article>
                     <!-- Ustensils -->
                     <article id="ustensils" class="filter flex gap-[63px] lg:mt-5" role="group">
-                        <div class="w-[195px] flex-1/3 rounded-xl bg-white" aria-label="Liste déroulante ustensiles">
+                        <div class="w-[195px] flex-1/3 rounded-xl bg-white h-max" aria-label="Liste déroulante ustensiles">
                             <header class="flex items-center justify-between p-4">
                                 <span>Ustensiles</span>
-                                <img src="assets/arrow_down.svg" alt="flèche vers le bas" aria-label="Ouvrir liste filtre"/>
+                                <img class="arrow-icon-dropdown" src="assets/arrow_down.svg" alt="flèche vers le bas" aria-label="Ouvrir liste filtre"/>
                             </header>
-                            <div class="dropdown-panel" id="panel-ustensils">
+                            <div class="dropdown-panel hidden" id="panel-ustensils">
                                 <div class="px-4">
                                     <div class="flex w-full justify-between items-center border-regular-light-gray border rounded-xs py-2 pl-2 pr-4">
                                         <input name="ustensils" type="text" placeholder="Rechercher…" class="w-full text-sm" />
@@ -107,16 +107,19 @@
                     </article>
                 </div>
                 <!-- Nombre de recettes affiché -->
-                <div role="note" class="lg:mt-10">
-                    <h2 class="text-xl"><span id="recipes_count">NN</span></h2>
+                <div role="note" class="mt-4 lg:mt-10">
+                    <h2 class="text-xl text-center lg:text-left"><span id="recipes_count">Aucune recette trouvée</span></h2>
                 </div>
             </div>
             <!-- Liste items selectionnés -->
-            <div id="list-tags" role="group" class="flex lg:gap-16">
+            <div id="list-tags" role="group" class="flex mt-8 lg:mt-0 lg:gap-16">
             </div>
             <!-- Listes recettes -->
             <div role="group" id="list-recipes" class="flex gap-y-16 lg:gap-x-12 flex-wrap lg:mt-[23px]">
             </div>
+            <div id="no-results" class="hidden">
+                <h2 class="text-2xl font-bold">Aucune recette ne correspond à votre recherche...</h2>
+                <p class="mt-4 text-lg">Vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>
         </main>
         <script type="module" src="src/scripts/main.js"></script>
     </body>
