@@ -41,61 +41,6 @@ export function search(argument) {
 }
 
 /**
- * Recherche les recettes par Ustensils/Appareils/Ingredients
- * @param {string} type Ustensils/Appareils/Ingredients
- * @param {Array<string>} keywords Mots clé
- * @returns {Array}
- */
-export function searchByType(type, keywords) {
-    const result = [];
-    switch (type) {
-        case "ustensils":
-            for (let i = 0; i < RECIPESDATA.length; i++) {
-                const recipe = RECIPESDATA[i];
-                const ustensilsArray = RECIPESDATA[i].ustensils;
-                for (let j = 0; j < keywords.length; j++) {
-                    if (ustensilsArray.includes(keywords[j])) {
-                        if (!result.includes(recipe)) {
-                            result.push(recipe);
-                        }
-                    }
-                }
-            }
-            break;
-        case "appliance":
-            for (let i = 0; i < RECIPESDATA.length; i++) {
-                const recipe = RECIPESDATA[i];
-                const applianceRecipe = RECIPESDATA[i].appliance;
-                for (let j = 0; j < keywords.length; j++) {
-                    if (applianceRecipe.toLowerCase() === keywords[j].toLowerCase()) {
-                        if (!result.includes(recipe)) {
-                            result.push(recipe);
-                        }
-                    }
-                }
-            }
-            break;
-        case "ingredients":
-            for (let i = 0; i < RECIPESDATA.length; i++) {
-                const recipe = RECIPESDATA[i];
-                const ingredientArray = RECIPESDATA[i].ingredients;
-                for (let j = 0; j < ingredientArray.length; j++) {
-                    for (let k = 0; k < keywords.length; k++) {
-                        if (ingredientArray[j].ingredient.toLowerCase() === keywords[k].toLowerCase()) {
-                            if (!result.includes(recipe)) {
-                                result.push(recipe);
-                            }
-                        }
-                    }
-                }
-            }
-            break;
-    }
-
-    return result;
-}
-
-/**
  * Filtre les recettes en appliquant un ET logique sur tous les mots-clés.
  * Un mot-clé peut correspondre à un morceau de texte présent dans :
  *  - un nom d'ingrédient
