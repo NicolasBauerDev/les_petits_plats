@@ -12,19 +12,23 @@ window.onload = () => {
         e.preventDefault();
     });
     mainSearch.addEventListener("input", (e) => {
-        displayRecipes(giveSearchArguments(e.target.value));
+        displayRecipes(giveSearchArguments(e.target.value), e.target.value);
     });
 
     // Filtres
+    openCloseFilter();
     initFilter(searchResults);
     displayRecipesByTag();
 };
 
 function giveSearchArguments(argument, filter = false) {
+    if (argument.length >= 3 && !filter) {
+        return search(argument);
+    }
     if (filter) {
         return searchByFilter(argument);
     }
-    return search(argument);
+    return [];
 }
 
 // Filtres
