@@ -217,10 +217,12 @@ function displayRecipes(results, inputValue) {
     for (let i = 0; i < results.length; i++) {
         listRecipes.appendChild(new Recipes(results[i]).createRecipeCard());
     }
-    recipes_count.textContent = results.length > 1 ? `${results.length} recettes` : `Aucune recette trouvée`;
-    if (results.length <= 0) {
+    recipes_count.textContent = results.length > 0 ? `${results.length} recettes` : `Aucune recette trouvée`;
+    if (results.length <= 0 && inputValue && inputValue.length >= 3) {
         noResult.classList.remove("hidden");
         noResult.querySelector("h2").textContent = `Aucune recette ne contient ${inputValue}`;
+    } else {
+        noResult.classList.add("hidden");
     }
 }
 
