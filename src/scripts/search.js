@@ -6,7 +6,6 @@ const RECIPESDATA = recipes;
  *
  * @param {string} argument Argument de recherche saisi par l'utilisateur.
  * Recherche par Nom, description et ingrédients.
- * @param {Array} currentTab Tableau courant des résultats de recherche.
  * @returns {Array} Retourne un tableau d'objets recettes.
  */
 export function search(argument) {
